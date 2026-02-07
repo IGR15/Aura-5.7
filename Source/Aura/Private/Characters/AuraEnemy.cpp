@@ -1,0 +1,164 @@
+// IGR1S
+
+
+#include "Characters/AuraEnemy.h"
+
+#include "AbilitySyste/AuraAbilitySystemComponent.h"
+#include "AbilitySyste/AuraAbilitySystemLibrary.h"
+#include "AbilitySyste/AuraAttributeSet.h"
+#include "AuraGameplayTags.h"
+#include "AI/AuraAIController.h"
+#include "Aura/Aura.h"
+#include "BehaviorTree/BehaviorTree.h"
+#include "BehaviorTree/BlackboardComponent.h"
+#include "Components/WidgetComponent.h"
+#include "GameFramework/CharacterMovementComponent.h"
+#include "UI/Widget/AuraUserWidget.h"
+
+AAuraEnemy::AAuraEnemy()
+{
+	GetMesh()->SetCollisionResponseToChannel(ECC_Visibility,ECR_Block);
+
+	AbilitySystemComponent=CreateDefaultSubobject<UAuraAbilitySystemComponent>("AbilitySystem_Component");
+	AbilitySystemComponent->SetIsReplicated(true);
+	AbilitySystemComponent->SetReplicationMode(EGameplayEffectReplicationMode::Minimal);
+
+	AttributeSet = CreateDefaultSubobject<UAuraAttributeSet>("AttributeSet");
+
+	HealthBar=CreateDefaultSubobject<UWidgetComponent>("HealthBar");
+	HealthBar->SetupAttachment(GetRootComponent());
+
+	bUseControllerRotationPitch=false;
+	bUseControllerRotationRoll=false;
+	bUseControllerRotationYaw=false;
+
+	GetCharacterMovement()->bUseControllerDesiredRotation=true;
+}
+
+void AAuraEnemy::PossessedBy(AController* NewController)
+{
+	Super::PossessedBy(NewController);
+	if (!HasAuthority())return;
+	
+	AuraAIController=Cast<AAuraAIController>(NewController);
+	AuraAIController->GetBlackboardComponent()->InitializeBlackboard(*BehaviorTree->BlackboardAsset);
+	AuraAIController->RunBehaviorTree(BehaviorTree);
+
+	AuraAIController->GetBlackboardComponent()->SetValueAsBool(FName("HitReacting"),false);
+	AuraAIController->GetBlackboardComponent()->SetValueAsBool(FName("RangedAttacker"),CharacterClass!=ECharacterClass::Warrior);
+
+
+}
+
+void AAuraEnemy::HighLightActor()
+{
+	GetMesh()->SetRenderCustomDepth(true);
+	GetMesh()->SetCustomDepthStencilValue(CUSTOM_DEPTH_RED);
+	
+	Weapon->SetRenderCustomDepth(true);
+	Weapon->SetCustomDepthStencilValue(CUSTOM_DEPTH_RED);
+}
+
+void AAuraEnemy::UnHighLightAcotr()
+{
+	GetMesh()->SetRenderCustomDepth(false);
+	Weapon->SetRenderCustomDepth(false);
+
+}
+
+int32 AAuraEnemy::GetPlayerLevel_Implementation()
+{
+	return level;
+}
+
+void AAuraEnemy::Die(const FVector& DeathImpulse)
+{
+	SetLifeSpan(LifeSpan);
+	if (AuraAIController) 	AuraAIController->GetBlackboardComponent()->SetValueAsBool(FName("Dead"),true);
+
+	Super::Die(DeathImpulse);
+}
+
+void AAuraEnemy::SetCombatTarget_Implementation(AActor* InCombatTarget)
+{
+	CombatTarget=InCombatTarget;
+}
+
+AActor* AAuraEnemy::GetCombatTarget_Implementation() const
+{
+	return CombatTarget;
+}
+
+void AAuraEnemy::BeginPlay()
+{
+	Super::BeginPlay();
+	GetCharacterMovement()->MaxWalkSpeed=BasewalkSpeed;
+
+	InitAbilityActorInfor();
+	if (HasAuthority())
+	{
+		UAuraAbilitySystemLibrary::GiveStartupAbilites(this,AbilitySystemComponent,CharacterClass);
+	}
+
+	if (UAuraUserWidget* AuraUserWidget= Cast<UAuraUserWidget>(HealthBar->GetUserWidgetObject()))
+	{
+		//now the enemy owns this widget controller
+		AuraUserWidget->SetWidgetController(this);
+	}
+	
+	if (const UAuraAttributeSet* AuraAS =CastChecked<UAuraAttributeSet>(AttributeSet))
+	{
+		// these callback lambdas broadcast when the attribute changes not initialize them 
+		//we are binding to the ASC delegates because they broadcast when they change
+		AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(AuraAS->GetHealthAttribute()).AddLambda(
+			[this](const FOnAttributeChangeData& Data)
+			{
+				OnHealthChanged.Broadcast(Data.NewValue);
+			}
+
+		);
+		AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(AuraAS->GetMaxHealthAttribute()).AddLambda(
+			[this](const FOnAttributeChangeData& Data)
+			{
+				OnMaxHealthChanged.Broadcast(Data.NewValue);
+			}
+
+		);
+		
+		AbilitySystemComponent->RegisterGameplayTagEvent(FAuraGameplayTags::Get().Effects_HitReact,EGameplayTagEventType::NewOrRemoved).AddUObject(
+        //this is how we bind a call back to a delegate
+		this,
+		&AAuraEnemy::HitReactTagChanged
+		);// creates an event when a tag has been add or removed 
+
+		//these broadcasts are for initializing the attributes
+		OnHealthChanged.Broadcast(AuraAS->GetHealth());
+		OnMaxHealthChanged.Broadcast(AuraAS->GetMaxHealth());
+	}
+}
+void AAuraEnemy::HitReactTagChanged(const FGameplayTag CallBackTag, int32 NewCount)
+{
+	 bHitReacting=NewCount>0;
+	GetCharacterMovement()->MaxWalkSpeed=bHitReacting ?0.0f:BasewalkSpeed;
+	if (AuraAIController&&AuraAIController->GetBlackboardComponent())
+	{
+		AuraAIController->GetBlackboardComponent()->SetValueAsBool(FName("HitReacting"),bHitReacting);
+	}
+
+}
+
+void AAuraEnemy::InitAbilityActorInfor()
+{
+	AbilitySystemComponent->InitAbilityActorInfo(this,this);
+	Cast<UAuraAbilitySystemComponent>(AbilitySystemComponent)->AbilityActorInofSet();
+	if (HasAuthority())
+	{
+		InitializeDefaultAttributes();
+	}
+	OnAscRegistered.Broadcast(AbilitySystemComponent);
+}
+
+void AAuraEnemy::InitializeDefaultAttributes() const
+{
+	UAuraAbilitySystemLibrary::InitializeDefaultAttributes(this,CharacterClass,level,AbilitySystemComponent);
+}
