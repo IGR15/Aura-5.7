@@ -140,7 +140,7 @@ void UAuraFIreBolt::SpawnProjectiles(const FVector& ProjectileTargetLocation, co
 			/*
 			 *Projectile->ProjectileMovement->HomingTargetComponent=NewObject<USceneComponent>(USceneComponent::StaticClass());
 			 * when the projectile Dies and the HomingTargetComponent Go's out of scope the new Object dosent get marked for garbage collection and wont be cleaned up
-			 * that why we gave aura projectile a USceneComponent Variable ->HomingTargetSceneComponent
+			 * thats why we gave aura projectile a USceneComponent Variable ->HomingTargetSceneComponent
 			 * and gave it a UPROPERTY() to mark it for garbage collection 
 			 */  
 			Projectile->HomingTargetSceneComponent=NewObject<USceneComponent>(USceneComponent::StaticClass());
