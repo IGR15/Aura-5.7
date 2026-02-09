@@ -272,9 +272,11 @@ void UAuraAttributeSet::Debuff(const FEffectProperties& Props)
 	TagContainer.AddTag(GameplayTags.DamageTypesToDebuffs[DamageType]);
 	Component.SetAndApplyTargetTagChanges(TagContainer);
 
+	/*
 	Effect->StackingType=EGameplayEffectStackingType::AggregateBySource;
+	*/
 	Effect->StackLimitCount=1;
-	//Modifiers
+	//ModifiersD
 	const int32 Index = Effect->Modifiers.Add(FGameplayModifierInfo());
 	FGameplayModifierInfo& ModifierInfo=Effect->Modifiers[Index];
 
