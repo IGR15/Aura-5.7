@@ -14,6 +14,8 @@ class AURA_API UAuraBeamSpell : public UAuraDamageAbility
 {
 	GENERATED_BODY()
 public:
+	UPROPERTY(EditDefaultsOnly,Category="Beam")
+	float ScatTargetRadios=400.f;
 	UFUNCTION(BlueprintCallable)
 	void StoreMouseDataInfo(const FHitResult& HitResult);
 

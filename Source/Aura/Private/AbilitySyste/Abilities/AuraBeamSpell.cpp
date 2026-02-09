@@ -74,7 +74,7 @@ void UAuraBeamSpell::StoreAdditionalTargets(TArray<AActor*>& OutAdditionalTarget
 		GetAvatarActorFromActorInfo(),
 		OverlappingActors,
 		ActorsToIgnore,
-		850.f,
+		ScatTargetRadios,
 		MouseHitActor->GetActorLocation());
 	
 	/*int32 NumAdditionalTargets=FMath::Min(GetAbilityLevel()-1,MaxNumShockTargets);*/
