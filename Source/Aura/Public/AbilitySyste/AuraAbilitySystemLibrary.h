@@ -118,9 +118,12 @@ public:
 	static void SetKnockbackForce(UPARAM(ref) FGameplayEffectContextHandle& EffectContextHandle,const FVector& InForce);
 
 	
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintCallable,Category="AuraAbilitySystemLibrary|Gameplay Mechanics")
 	static void GetLivePlayersWithInRadius(const UObject* WorldContextObject,TArray<AActor*>& OutOverlappingActors,const TArray<AActor*>& ActorsToIgnore,float Radius,const FVector& SphereOrigin);
 
+	UFUNCTION(BlueprintCallable,Category="AuraAbilitySystemLibrary|Gameplay Mechanics")
+	static void GetClosestTargets(int32 MaxTargets,const TArray<AActor*>& Actors,TArray<AActor*>& OutClosestTargets,const FVector& Origin);
+	
 	static int32 GetXPRewardForClassAndLevel(const UObject* WorldContextObject,ECharacterClass CharacterClass,int32 CharacterLevel);
 
 	UFUNCTION(BlueprintCallable,Category="AuraAbilitySystemLibrary|Gameplay Mechanics")
