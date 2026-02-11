@@ -50,8 +50,8 @@ public:
 	FOnASCRegistered OnAscRegistered;
 	virtual FOnASCRegistered GetOnASCRegisteredDelegate() override;
 
-	FOnDeath OnDeath;
-	virtual FOnDeath& GetOnDeathDelegate() override;
+	FOnDeathSignature OnDeathDelegatee;
+	virtual FOnDeathSignature& GetOnDeathDelegate() override;
 	/* end combat interface*/
 
 	UPROPERTY(EditAnywhere,Category="Combat")

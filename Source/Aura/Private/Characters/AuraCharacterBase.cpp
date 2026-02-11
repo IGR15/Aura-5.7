@@ -67,7 +67,8 @@ void AAuraCharacterBase::MultiCastHandleDeath_Implementation(const FVector& Deat
 	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::Type::NoCollision);
 	Dissolve();
 	bDead=true;
-	OnDeath.Broadcast(this);
+	BurnDebuffComponent->Deactivate();
+	OnDeathDelegatee.Broadcast(this);
 }
 
 void AAuraCharacterBase::BeginPlay()
@@ -160,9 +161,9 @@ FOnASCRegistered AAuraCharacterBase::GetOnASCRegisteredDelegate()
 	return OnAscRegistered;
 }
 
-FOnDeath& AAuraCharacterBase::GetOnDeathDelegate()
+FOnDeathSignature& AAuraCharacterBase::GetOnDeathDelegate()
 {
-	return OnDeath;
+	return OnDeathDelegatee;
 }
 
 void AAuraCharacterBase::InitAbilityActorInfor()
