@@ -53,6 +53,7 @@ public:
 	TObjectPtr<AActor>CombatTarget;
 	
 protected:
+	virtual void StunTagChanged(const FGameplayTag CallbackTag, int32 NewCount) override;
 	
 	virtual void BeginPlay() override;
 

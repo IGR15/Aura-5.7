@@ -44,6 +44,7 @@ public:
 	UPROPERTY(VisibleAnywhere,BlueprintReadOnly)
 	TObjectPtr<UNiagaraComponent>LevelUpNiagaraComponent;
 	/*End Combat Interface*/
+	virtual void OnRep_Stunned() override;
 	
 private:
 

@@ -180,6 +180,11 @@ FOnDeathSignature& AAuraCharacterBase::GetOnDeathDelegate()
 	return OnDeathDelegatee;
 }
 
+void AAuraCharacterBase::OnRep_Stunned()
+{
+	
+}
+
 void AAuraCharacterBase::InitAbilityActorInfor()
 { 
 }
