@@ -27,6 +27,8 @@ public:
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 
 	UAttributeSet* GetAttributeSet()const {return AttributeSet;}
+	
+	virtual void GetLifetimeReplicatedProps(TArray<class FLifetimeProperty>& OutLifetimeProps) const override;
 
 
 
@@ -57,7 +59,14 @@ public:
 	UPROPERTY(EditAnywhere,Category="Combat")
 	TArray<FTaggedMontage> AttackMontages;
 	
+	UPROPERTY(Replicated,BlueprintReadOnly)
+	bool bIsStunned=false;
+	
 protected:
+	
+	UPROPERTY(EditAnywhere,BlueprintReadOnly,Category="combat")
+	float BasewalkSpeed=600.f;
+	
 	bool bDead = false;
 	virtual void BeginPlay() override;
 
@@ -76,6 +85,7 @@ protected:
 	UPROPERTY(EditAnywhere,Category="Combat")
 	FName TailSocketName;
 
+	virtual void StunTagChanged(const FGameplayTag CallbackTag,int32 NewCount);
 
 
 	UPROPERTY()

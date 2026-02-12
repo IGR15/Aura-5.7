@@ -4,6 +4,7 @@
 #include "Characters/AuraCharacter.h"
 #include "NiagaraComponent.h"
 #include "AbilitySystemComponent.h"
+#include "AuraGameplayTags.h"
 #include "AbilitySyste/AuraAbilitySystemComponent.h"
 #include "AbilitySyste/Data/LevelUpInfo.h"
 #include "Camera/CameraComponent.h"
@@ -168,6 +169,7 @@ void AAuraCharacter::InitAbilityActorInfor()
 	AbilitySystemComponent=AuraPlayerState->GetAbilitySystemComponent();
 	OnAscRegistered.Broadcast(AbilitySystemComponent);
 	AttributeSet=AuraPlayerState->GetAttributeSet();
+	AbilitySystemComponent->RegisterGameplayTagEvent(FAuraGameplayTags::Get().Debuff_Stun,EGameplayTagEventType::NewOrRemoved).AddUObject(this,&AAuraCharacter::StunTagChanged);
 
 	if (AAuraPlayerController* AuraPlayerController= Cast<AAuraPlayerController>(GetController()))
 	{
