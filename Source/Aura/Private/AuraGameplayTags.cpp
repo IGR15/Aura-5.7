@@ -139,4 +139,6 @@ void FAuraGameplayTags::InitilizeNativeGameplayTags()
 	GameplayTags.Player_Block_InputReleased=UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Player.Block.InputReleased"),FString("Block input"));
 	GameplayTags.Player_Block_CursorTrace=UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Player.Block.CursorTrace"),FString("Block CursorTrace under cursor"));
 
+	GameplayTags.Abilities = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Abilities"), FString("Ability Tag."));
+	GameplayTags.Abilities_Passive = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Abilities.Passive"), FString("Passive Ability Tag."));
 }

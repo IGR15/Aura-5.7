@@ -4,9 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/GameModeBase.h"
+#include "GameplayTagContainer.h"
 #include "AuraGameModeBase.generated.h"
 class UAbilityInfo;
 class UCharacterClassInfo;
+class UGameplayEffect;
 /**
  * 
  */
@@ -21,5 +23,8 @@ public:
 
 	UPROPERTY(EditDefaultsOnly,Category="Ability Info")
 	TObjectPtr<UAbilityInfo>AbilityInfo;
+	
+	UPROPERTY(EditDefaultsOnly, Category = "Debuff Data")
+	TMap<FGameplayTag, TSubclassOf<UGameplayEffect>> DebuffTagToEffectMap;
 	
 };

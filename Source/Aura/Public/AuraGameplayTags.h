@@ -117,6 +117,9 @@ public:
 	TMap<FGameplayTag,FGameplayTag>DamageTypesToDebuffs;
 
 	FGameplayTag Effects_HitReact;
+	
+	FGameplayTag Abilities;
+	FGameplayTag Abilities_Passive;
 
 private:
 	static FAuraGameplayTags GameplayTags;

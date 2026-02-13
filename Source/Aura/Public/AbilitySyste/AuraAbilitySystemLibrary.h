@@ -28,6 +28,8 @@ class AURA_API UAuraAbilitySystemLibrary : public UBlueprintFunctionLibrary
 	GENERATED_BODY()
 
 public:
+	UFUNCTION(BlueprintCallable, meta = (WorldContext = "WorldContextObject"), Category = "AuraAbilitySystemLibrary|Debuff Data")
+	static TMap<FGameplayTag, TSubclassOf<UGameplayEffect>> GetDebuffTagToEffectMap(const UObject* WorldContextObject);
 
 	UFUNCTION(BlueprintPure,Category="AuraAbilitySystemLibrary|WidgetController",meta=(DefaultToSelf="WorldContextObject"))
 	static bool MakeWidgetControllerParams(const UObject* WorldContextObject,FWidgetControllerParams& OutWCParams,AAuraHUD*& OutAuraHUd);

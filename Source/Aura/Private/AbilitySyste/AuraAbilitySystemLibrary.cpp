@@ -16,6 +16,15 @@
 #include "Player/AuraPlayerState.h"
 #include "UI/HUD/AuraHUD.h"
 
+TMap<FGameplayTag, TSubclassOf<UGameplayEffect>> UAuraAbilitySystemLibrary::GetDebuffTagToEffectMap(
+	const UObject* WorldContextObject)
+{
+	AAuraGameModeBase* AuraGameMode = Cast<AAuraGameModeBase>(UGameplayStatics::GetGameMode(WorldContextObject));
+	if (!AuraGameMode) return TMap<FGameplayTag, TSubclassOf<UGameplayEffect>>();
+ 
+	return AuraGameMode->DebuffTagToEffectMap;
+}
+
 bool UAuraAbilitySystemLibrary::MakeWidgetControllerParams(const UObject* WorldContextObject,FWidgetControllerParams& OutWCParams,AAuraHUD*& OutAuraHUd)
 {
 	if (APlayerController* PlayerController=UGameplayStatics::GetPlayerController(WorldContextObject,0))

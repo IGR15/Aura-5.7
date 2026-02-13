@@ -250,10 +250,10 @@ void UAuraAttributeSet::Debuff(const FEffectProperties& Props)
 	 */
 
 	const FAuraGameplayTags& GameplayTags=FAuraGameplayTags::Get();
-	FGameplayEffectContextHandle EffectContextHandle=Props.SourceASC->MakeEffectContext();
-	EffectContextHandle.AddSourceObject(Props.SourceAvatarActor);
+	/*FGameplayEffectContextHandle EffectContextHandle=Props.SourceASC->MakeEffectContext();
+	EffectContextHandle.AddSourceObject(Props.SourceAvatarActor);*/
 
-	const FGameplayTag DamageType= UAuraAbilitySystemLibrary::GetDamageType(Props.EffectContextHandle);
+	/*const FGameplayTag DamageType= UAuraAbilitySystemLibrary::GetDamageType(Props.EffectContextHandle);
 	const float DebuffDamage=UAuraAbilitySystemLibrary::GetDebuffDamage(Props.EffectContextHandle);
 	const float DebuffDuration=UAuraAbilitySystemLibrary::GetDebuffDurtaion(Props.EffectContextHandle);
 	const float DebuffFrequency=UAuraAbilitySystemLibrary::GetDebuffFrequency(Props.EffectContextHandle);
@@ -283,7 +283,7 @@ void UAuraAttributeSet::Debuff(const FEffectProperties& Props)
 
 	/*
 	Effect->StackingType=EGameplayEffectStackingType::AggregateBySource;
-	*/
+	#1#
 	Effect->StackLimitCount=1;
 	//ModifiersD
 	const int32 Index = Effect->Modifiers.Add(FGameplayModifierInfo());
@@ -299,9 +299,39 @@ void UAuraAttributeSet::Debuff(const FEffectProperties& Props)
 		TSharedPtr<FGameplayTag>DebuffDamageType=MakeShareable(new FGameplayTag(DamageType));
 		AuraContext->SetDamageType(DebuffDamageType);
 
+		const FGameplayTagContainer AbilitiesToCancelTags(GameplayTags.Abilities);
+		const FGameplayTagContainer AbilitiesToIgnoreTags(GameplayTags.Abilities_Passive);
+		Props.TargetAsc->CancelAbilities(&AbilitiesToCancelTags, &AbilitiesToIgnoreTags);
 		Props.TargetAsc->ApplyGameplayEffectSpecToSelf(*MutableSpec);
 
-	}
+	}*/
+	/////////////////////////////////////////////////////////////////////////////////////
+	const FGameplayTag DamageType= UAuraAbilitySystemLibrary::GetDamageType(Props.EffectContextHandle);
+	const FGameplayTag DebuffTag=GameplayTags.DamageTypesToDebuffs[DamageType];
+	const TMap<FGameplayTag, TSubclassOf<UGameplayEffect>>& DebuffTagToEffectMap = UAuraAbilitySystemLibrary::GetDebuffTagToEffectMap(this);
+	const TSubclassOf<UGameplayEffect> EffectClass = DebuffTagToEffectMap[DebuffTag];
+	// Create effect spec.
+	const FGameplayEffectContextHandle EffectContextHandle = Props.SourceASC->MakeEffectContext();
+	const FGameplayEffectSpecHandle EffectSpecHandle = Props.SourceASC->MakeOutgoingSpec(EffectClass, 1.0f, EffectContextHandle);
+	FGameplayEffectSpec* EffectSpec = EffectSpecHandle.Data.Get();
+	// Set up effect spec.
+	const float DebuffDuration = UAuraAbilitySystemLibrary::GetDebuffDurtaion(Props.EffectContextHandle);
+	EffectSpec->SetSetByCallerMagnitude(GameplayTags.Debuff_Duration, DebuffDuration);
+	const float DebuffFrequency = UAuraAbilitySystemLibrary::GetDebuffFrequency(Props.EffectContextHandle);
+	EffectSpec->Period = DebuffFrequency;
+	const float DebuffDamage = UAuraAbilitySystemLibrary::GetDebuffDamage(Props.EffectContextHandle);
+	EffectSpec->SetSetByCallerMagnitude(GameplayTags.Debuff_Damage, DebuffDamage);
+	// Set effect context's damage type tag.
+	FAuraGamePlayEffectContext* AuraEffectContext = static_cast<FAuraGamePlayEffectContext*>(EffectSpec->GetContext().Get());
+	AuraEffectContext->SetDamageType(MakeShared<FGameplayTag>(DamageType));
+ 
+	/*UAuraAbilitySystemLibrary::CancelAllActiveAbilitiesInASC(Props.TargetAsc);*/
+	const FGameplayTagContainer AbilitiesToCancelTags(GameplayTags.Abilities);
+	const FGameplayTagContainer AbilitiesToIgnoreTags(GameplayTags.Abilities_Passive);
+	Props.TargetAsc->CancelAbilities(&AbilitiesToCancelTags, &AbilitiesToIgnoreTags);
+ 
+	// Apply effect spec.
+	Props.TargetAsc->ApplyGameplayEffectSpecToSelf(*EffectSpec);
 }
 
 void UAuraAttributeSet::HandleIncomingXP(const FEffectProperties& Props)
