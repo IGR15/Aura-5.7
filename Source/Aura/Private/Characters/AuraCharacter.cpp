@@ -52,6 +52,16 @@ void AAuraCharacter::PossessedBy(AController* NewController)
 	
 }
 
+void AAuraCharacter::MultiCastHandleDeath_Implementation(const FVector& DeathImpulse)
+{
+	Super::MultiCastHandleDeath_Implementation(DeathImpulse);
+	
+	if (APlayerController* PlayerController=GetController<APlayerController>())
+	{
+		PlayerController->DisableInput(PlayerController);
+	}
+}
+
 void AAuraCharacter::OnRep_PlayerState()
 {
 	Super::OnRep_PlayerState();

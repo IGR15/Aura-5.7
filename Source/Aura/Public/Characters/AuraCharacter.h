@@ -22,6 +22,7 @@ public:
 	AAuraCharacter();
 
 	virtual void PossessedBy(AController* NewController) override;
+	virtual void MultiCastHandleDeath_Implementation(const FVector& DeathImpulse) override;
 
 	virtual void OnRep_PlayerState() override;
 
