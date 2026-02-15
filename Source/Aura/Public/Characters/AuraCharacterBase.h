@@ -52,6 +52,7 @@ public:
 	FOnASCRegistered OnAscRegistered;
 	virtual FOnASCRegistered GetOnASCRegisteredDelegate() override;
 
+	UPROPERTY(BlueprintAssignable)
 	FOnDeathSignature OnDeathDelegatee;
 	virtual FOnDeathSignature& GetOnDeathDelegate() override;
 	/* end combat interface*/
