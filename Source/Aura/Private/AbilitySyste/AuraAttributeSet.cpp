@@ -385,7 +385,7 @@ void UAuraAttributeSet::HandleIncomingXP(const FEffectProperties& Props)
 
 void UAuraAttributeSet::ShowFloatingText(const FEffectProperties& Props, float Damage,bool bBlockedHit,bool bCriticalHit)const
 {
-	if (Props.SourceCharacter!=Props.TargetCharacter)
+	/*if (Props.SourceCharacter!=Props.TargetCharacter)
 	{
 		if (AAuraPlayerController* PlayerController= Cast<AAuraPlayerController>(Props.SourceCharacter->Controller))
 		{
@@ -395,6 +395,17 @@ void UAuraAttributeSet::ShowFloatingText(const FEffectProperties& Props, float D
 		if (AAuraPlayerController* PlayerController= Cast<AAuraPlayerController>(Props.TargetCharacter->Controller))
 		{
 			PlayerController->ShowDamageNumber(Damage,Props.TargetCharacter,bBlockedHit,bCriticalHit);
+		}
+	}*/
+	if (Props.SourceCharacter != Props.TargetCharacter)
+	{
+		// Spawn the damage text on each client.
+		for (FConstPlayerControllerIterator It = GetWorld()->GetPlayerControllerIterator(); It; ++It)
+		{
+			if (AAuraPlayerController* AuraPlayerController = Cast<AAuraPlayerController>(It->Get()))
+			{
+				AuraPlayerController->ShowDamageNumber(Damage,Props.TargetCharacter, bBlockedHit, bCriticalHit);
+			}
 		}
 	}
 }
