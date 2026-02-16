@@ -45,9 +45,10 @@ UAbilitySystemComponent* AAuraCharacterBase::GetAbilitySystemComponent() const
 
 void AAuraCharacterBase::GetLifetimeReplicatedProps(TArray<class FLifetimeProperty>& OutLifetimeProps) const
 {
-	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps); 
 	DOREPLIFETIME(AAuraCharacterBase,bIsStunned)
 	DOREPLIFETIME(AAuraCharacterBase,bIsBurned)
+	DOREPLIFETIME(AAuraCharacterBase,bIsBeingShocked)
 }
 
 
@@ -183,7 +184,17 @@ FOnASCRegistered& AAuraCharacterBase::GetOnASCRegisteredDelegate()
 	return OnAscRegistered;
 }
 
-FOnDeathSignature& AAuraCharacterBase::GetOnDeathDelegate()
+ void AAuraCharacterBase::SetIsBeingShocked_Implementation(bool BInShock)
+ {
+	 bIsBeingShocked=BInShock;
+ }
+
+ bool AAuraCharacterBase::IsBeingShocked_Implementation() const
+ {
+	 return bIsBeingShocked;
+ }
+
+ FOnDeathSignature& AAuraCharacterBase::GetOnDeathDelegate()
 {
 	return OnDeathDelegatee;
 }
