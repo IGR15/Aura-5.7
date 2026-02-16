@@ -46,6 +46,7 @@ public:
 	TObjectPtr<UNiagaraComponent>LevelUpNiagaraComponent;
 	/*End Combat Interface*/
 	virtual void OnRep_Stunned() override;
+	virtual void OnRep_Burned() override;
 	
 private:
 

@@ -18,6 +18,7 @@ AAuraProjectile::AAuraProjectile()
 {
 	PrimaryActorTick.bCanEverTick = false;
 	bReplicates = true;
+	
 
 	Sphere=CreateDefaultSubobject<USphereComponent>("sphere");
 	SetRootComponent(Sphere);
@@ -38,6 +39,7 @@ void AAuraProjectile::BeginPlay()
 {
 	Super::BeginPlay();
 	SetLifeSpan(LifeSpan);
+	SetReplicatingMovement(true);
 	Sphere->OnComponentBeginOverlap.AddDynamic(this,&AAuraProjectile::OnsphereOverlap);
 
 	LoopingSoundComponent=UGameplayStatics::SpawnSoundAttached(LoopingSound,GetRootComponent());
@@ -72,6 +74,7 @@ void AAuraProjectile::Destroyed()
 void AAuraProjectile::OnsphereOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
                                       UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
+	if (DamageEffectParams.SourceASC==nullptr)return;
 	AActor* SourceAvatarActor= DamageEffectParams.SourceASC->GetAvatarActor();
 	if (SourceAvatarActor==OtherActor)return;
 

@@ -1,4 +1,4 @@
-// IGR1S
+ // IGR1S
 
 
 #include "Characters/AuraCharacterBase.h"
@@ -21,6 +21,10 @@ AAuraCharacterBase::AAuraCharacterBase()
 	BurnDebuffComponent= CreateDefaultSubobject<UDebuffNiagaraComponent>("BurnDebuffComponent");
 	BurnDebuffComponent->SetupAttachment(GetRootComponent());
 	BurnDebuffComponent->DebuffTag=FAuraGameplayTags::Get().Debuff_Burn;
+
+	StunDebuffComponent= CreateDefaultSubobject<UDebuffNiagaraComponent>("StunDebuffComponent");
+	StunDebuffComponent->SetupAttachment(GetRootComponent());
+	StunDebuffComponent->DebuffTag=FAuraGameplayTags::Get().Debuff_Stun;
 	
 	GetCapsuleComponent()->SetCollisionResponseToChannel(ECC_Camera,ECR_Ignore);
 	GetCapsuleComponent()->SetGenerateOverlapEvents(false);
@@ -43,6 +47,7 @@ void AAuraCharacterBase::GetLifetimeReplicatedProps(TArray<class FLifetimeProper
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 	DOREPLIFETIME(AAuraCharacterBase,bIsStunned)
+	DOREPLIFETIME(AAuraCharacterBase,bIsBurned)
 }
 
 
@@ -78,6 +83,7 @@ void AAuraCharacterBase::MultiCastHandleDeath_Implementation(const FVector& Deat
 	Dissolve();
 	bDead=true;
 	BurnDebuffComponent->Deactivate();
+	StunDebuffComponent->Deactivate();
 	OnDeathDelegatee.Broadcast(this);
 }
 
@@ -172,7 +178,7 @@ USkeletalMeshComponent* AAuraCharacterBase::GetWeapon_Implementation()
 	return Weapon;
 }
 
-FOnASCRegistered AAuraCharacterBase::GetOnASCRegisteredDelegate()
+FOnASCRegistered& AAuraCharacterBase::GetOnASCRegisteredDelegate()
 {
 	return OnAscRegistered;
 }
@@ -187,7 +193,11 @@ void AAuraCharacterBase::OnRep_Stunned()
 	
 }
 
-void AAuraCharacterBase::InitAbilityActorInfor()
+ void AAuraCharacterBase::OnRep_Burned()
+ {
+ }
+
+ void AAuraCharacterBase::InitAbilityActorInfor()
 { 
 }
 
