@@ -93,6 +93,12 @@ public:
 
 	FGameplayTag Cooldown_Fire_FireBolt;
 	FGameplayTag Cooldown_Lightning_Electrocute;
+	
+	FGameplayTag Abilities_Passive_HaloOfProtection;
+	/*FGameplayTag Abilities_Passive_HaloOfResistance;
+	FGameplayTag Abilities_Passive_HaloOfStrength;*/
+	FGameplayTag Abilities_Passive_LifeSiphon;
+	FGameplayTag Abilities_Passive_ManaSiphon;
 
 	FGameplayTag CombatSocket_Weapon;
 	FGameplayTag CombatSocket_RightHand;
