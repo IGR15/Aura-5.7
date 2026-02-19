@@ -96,7 +96,9 @@ void FAuraGameplayTags::InitilizeNativeGameplayTags()
 	GameplayTags.Abilities_Summon=UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Abilities.Summon"),FString("Summon ability Tag"));
 	GameplayTags.Abilities_Fire_FireBolt=UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Abilities.Fire.FireBolt"),FString("FireBolt ability Tag"));
 	GameplayTags.Abilities_Lightning_Electrocute=UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Abilities.Lightning.Electrocute"),FString("Electrocute ability Tag"));
-
+	GameplayTags.Abilities_Arcane_ArcaneShards=UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Abilities.Arcane.ArcaneShard"),FString("ArcaneShard ability Tag"));
+	
+	
 	GameplayTags.Abilities_Passive_HaloOfProtection=UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Abilities.Passive.HaloOfProtection"),FString("HaloOfProtection Passive ability Tag"));
 	GameplayTags.Abilities_Passive_LifeSiphon=UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Abilities.Passive.LifeSiphon"),FString("LifeSiphon passive ability Tag"));
 	GameplayTags.Abilities_Passive_ManaSiphon=UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Abilities.Passive.ManaSiphon"),FString("ManaSiphon passive ability Tag"));

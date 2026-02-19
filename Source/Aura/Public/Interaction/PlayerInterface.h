@@ -56,4 +56,12 @@ public:
 	int32 GetAttributePoints()const;
 	UFUNCTION(BlueprintNativeEvent)
 	int32 GetSpellPoints()const;
+	
+	UFUNCTION(BlueprintNativeEvent,blueprintcallable)
+	void ShowMagicCircle(UMaterialInterface* DecalMaterial=nullptr);
+	
+	UFUNCTION(BlueprintNativeEvent,blueprintcallable)
+	void HideMagicCircle();
+	
+	
 };
