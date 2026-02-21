@@ -92,7 +92,18 @@ public:
 	
 	UFUNCTION(BlueprintPure,Category="AuraAbilitySystemLibrary|Gameplay Effects")
 	static bool IsNotFriend(AActor* FirstActor,AActor* SecondActor);
+	
+	UFUNCTION(BlueprintPure,Category="AuraAbilitySystemLibrary|Gameplay Effects")
+	static bool IsRadialDamage(const FGameplayEffectContextHandle& EffectContextHandle);
 
+	UFUNCTION(BlueprintPure,Category="AuraAbilitySystemLibrary|Gameplay Effects")
+	static float GetRadialDamageInnerRadius(const FGameplayEffectContextHandle& EffectContextHandle);
+	
+	UFUNCTION(BlueprintPure,Category="AuraAbilitySystemLibrary|Gameplay Effects")
+	static float GetRadialDamageOuterRadius(const FGameplayEffectContextHandle& EffectContextHandle);
+	
+	UFUNCTION(BlueprintPure,Category="AuraAbilitySystemLibrary|Gameplay Effects")
+	static FVector GetRadialDamageOrigen(const FGameplayEffectContextHandle& EffectContextHandle);
 
 	/*
 	 * Effect context Setters
@@ -127,6 +138,18 @@ public:
 	UFUNCTION(BlueprintCallable,Category="AuraAbilitySystemLibrary|Gameplay Effects")
 	static void SetKnockbackForce(UPARAM(ref) FGameplayEffectContextHandle& EffectContextHandle,const FVector& InForce);
 
+	UFUNCTION(BlueprintCallable,Category="AuraAbilitySystemLibrary|Gameplay Effects")
+	static void SetIsRadialDamage(UPARAM(ref) FGameplayEffectContextHandle& EffectContextHandle,bool bInIsRadialDamage);
+	
+	UFUNCTION(BlueprintCallable,Category="AuraAbilitySystemLibrary|Gameplay Effects")
+	static void SetRadialDamageInnerRadius(UPARAM(ref) FGameplayEffectContextHandle& EffectContextHandle,float InInnerRadius);
+	
+	UFUNCTION(BlueprintCallable,Category="AuraAbilitySystemLibrary|Gameplay Effects")
+	static void SetRadialDamageOuterRadius(UPARAM(ref) FGameplayEffectContextHandle& EffectContextHandle,float InOuterRadius);
+	
+	UFUNCTION(BlueprintCallable,Category="AuraAbilitySystemLibrary|Gameplay Effects")
+	static void SetRadialDamageOrigen(UPARAM(ref) FGameplayEffectContextHandle& EffectContextHandle,const FVector& InOrigen);
+	
 	/*
 	 * GamePlay Mechanics
 	 */
