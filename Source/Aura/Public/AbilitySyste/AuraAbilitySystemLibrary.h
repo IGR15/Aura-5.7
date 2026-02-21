@@ -28,6 +28,8 @@ class AURA_API UAuraAbilitySystemLibrary : public UBlueprintFunctionLibrary
 	GENERATED_BODY()
 
 public:
+	
+	/*Widget Controller */
 	UFUNCTION(BlueprintCallable, meta = (WorldContext = "WorldContextObject"), Category = "AuraAbilitySystemLibrary|Debuff Data")
 	static TMap<FGameplayTag, TSubclassOf<UGameplayEffect>> GetDebuffTagToEffectMap(const UObject* WorldContextObject);
 
@@ -44,6 +46,7 @@ public:
 	UFUNCTION(BlueprintPure,Category="AuraAbilitySystemLibrary|WidgetController",meta=(DefaultToSelf="WorldContextObject"))
 	static USpellMenuWidgetController* GetSpellMenuWidgetController(const UObject* WorldContextObject);
 
+	/*Ability system class Defaults StartUp*/
 	//this will initialize base attributes based on attribute class and lvl
 	UFUNCTION(BlueprintCallable,Category="AuraAbilitySystemLibrary|Character Class Defaultes")
 	static void InitializeDefaultAttributes(const UObject* WorldContextObject,ECharacterClass CharacterClass,float level,UAbilitySystemComponent* ASC);
@@ -57,6 +60,9 @@ public:
 	UFUNCTION(BlueprintCallable,Category="AuraAbilitySystemLibrary|Character Class Defaultes",meta=(DefaultToSelf="WorldContextObject"))
 	static UAbilityInfo* GetAbilityInfo(const UObject* WorldContextObject);
 
+	/*
+	 * Effect context Getters
+	 */ 
 	UFUNCTION(BlueprintPure,Category="AuraAbilitySystemLibrary|Gameplay Effects")
 	static bool IsBlockedHit(const FGameplayEffectContextHandle& EffectContextHandle);
 
@@ -88,7 +94,9 @@ public:
 	static bool IsNotFriend(AActor* FirstActor,AActor* SecondActor);
 
 
-
+	/*
+	 * Effect context Setters
+	 */
 	/*becase we are passing in a none const refrence the engine thinks its an output pin
 	 * but we need the effectcontexthandle to be in input pin so we used UPARAM(ref) to tell the engine its an
 	 * input pin 
@@ -119,6 +127,9 @@ public:
 	UFUNCTION(BlueprintCallable,Category="AuraAbilitySystemLibrary|Gameplay Effects")
 	static void SetKnockbackForce(UPARAM(ref) FGameplayEffectContextHandle& EffectContextHandle,const FVector& InForce);
 
+	/*
+	 * GamePlay Mechanics
+	 */
 	
 	UFUNCTION(BlueprintCallable,Category="AuraAbilitySystemLibrary|Gameplay Mechanics")
 	static void GetLivePlayersWithInRadius(const UObject* WorldContextObject,TArray<AActor*>& OutOverlappingActors,const TArray<AActor*>& ActorsToIgnore,float Radius,const FVector& SphereOrigin);
