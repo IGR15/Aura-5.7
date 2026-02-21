@@ -19,6 +19,9 @@ public:
 	                     const FGameplayEffectSpec& Spec,
 	                     FAggregatorEvaluateParameters EvaluateParams,
 	                     const TMap<FGameplayTag,FGameplayEffectAttributeCaptureDefinition>& InTagsToDefs) const;
+	
 
 	virtual void Execute_Implementation(const FGameplayEffectCustomExecutionParameters& ExecutionParams, FGameplayEffectCustomExecutionOutput& OutExecutionOutput) const override;
+	
+	float CalculateRadialDamage(const FGameplayEffectContextHandle& EffectContextHandle, const float Damage, const AActor* TargetAvatar)const;
 };

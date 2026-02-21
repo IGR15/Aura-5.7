@@ -194,9 +194,11 @@ void UExecCalc_Damage::Execute_Implementation(const FGameplayEffectCustomExecuti
 				CombatInterface->GetOnDamageSignature().AddLambda([&](float DamageAmount)
 				{
 					DamageTypeValue = DamageAmount;
+					CombatInterface->GetOnDamageSignature().Clear();
 				});
 			}
-			UGameplayStatics::ApplyRadialDamageWithFalloff(
+			DamageTypeValue = CalculateRadialDamage(ContextHandle,DamageTypeValue,TargetAvatar);
+			/*UGameplayStatics::ApplyRadialDamageWithFalloff(
 				TargetAvatar,
 				DamageTypeValue,
 				0.f,
@@ -208,7 +210,7 @@ void UExecCalc_Damage::Execute_Implementation(const FGameplayEffectCustomExecuti
 				TArray<AActor*>(),
 				SourceAvatar,
 				nullptr
-				);
+				);*/
 		}
 		
 		Damage+=DamageTypeValue;
@@ -273,4 +275,32 @@ void UExecCalc_Damage::Execute_Implementation(const FGameplayEffectCustomExecuti
 	const FGameplayModifierEvaluatedData EvaluatedData(UAuraAttributeSet::GetIncomingDamageAttribute(),EGameplayModOp::Additive,Damage);
 	OutExecutionOutput.AddOutputModifier(EvaluatedData);
 	
+}
+
+float UExecCalc_Damage::CalculateRadialDamage(const FGameplayEffectContextHandle& EffectContextHandle,
+	const float Damage, const AActor* TargetAvatar)const
+{
+	FVector TargetLocation = TargetAvatar->GetActorLocation();
+	const FVector Origin = UAuraAbilitySystemLibrary::GetRadialDamageOrigen(EffectContextHandle);
+	TargetLocation.Z = Origin.Z; // TargetAvatar halfheight may be above the InnerRadius
+    
+	const float SquareDistance = FVector::DistSquared(TargetLocation, Origin);
+    
+	const float InnerRadius = 
+		UAuraAbilitySystemLibrary::GetRadialDamageInnerRadius(EffectContextHandle);
+	const float SquareInnerRadius = FMath::Square(InnerRadius);
+ 
+	const float OuterRadius = 
+		UAuraAbilitySystemLibrary::GetRadialDamageOuterRadius(EffectContextHandle);
+	const float SquareOuterRadius = FMath::Square(OuterRadius);
+    
+	if (SquareDistance <= SquareInnerRadius) return Damage;
+ 
+	const TRange<float> DistanceRange(SquareInnerRadius, SquareOuterRadius);
+	const TRange<float> DamageScaleRange(1.0f, 0.f);
+	const float DamageScale = 
+		FMath::GetMappedRangeValueClamped(DistanceRange, DamageScaleRange, SquareDistance);
+	const float RadialDamage = Damage * DamageScale;
+ 
+	return RadialDamage;
 }
