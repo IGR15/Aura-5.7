@@ -20,7 +20,7 @@ public:
 	void CauseDamage(AActor* TargetActor);
 
 	UFUNCTION(BlueprintPure)
-	FDamageEffectParams MakeDamageEffectParams(AActor* TargetActor=nullptr,const FVector& InRadialDamageOrigin= FVector::ZeroVector)const;
+	FDamageEffectParams MakeDamageEffectParams(AActor* TargetActor=nullptr,FVector InRadialDamageOrigin= FVector::ZeroVector)const;
 	
 	UFUNCTION(BlueprintPure)
 	float GetDamageAtLevel()const;
