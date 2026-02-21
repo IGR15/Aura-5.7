@@ -16,7 +16,7 @@ void UAuraDamageAbility::CauseDamage(AActor* TargetActor)
 	
 }
 
-FDamageEffectParams UAuraDamageAbility::MakeDamageEffectParams(AActor* TargetActor)const
+FDamageEffectParams UAuraDamageAbility::MakeDamageEffectParams(AActor* TargetActor,const FVector& InRadialDamageOrigin)const
 {
 	FDamageEffectParams Params;
 	Params.WorldContextObject=GetAvatarActorFromActorInfo();
@@ -44,7 +44,7 @@ FDamageEffectParams UAuraDamageAbility::MakeDamageEffectParams(AActor* TargetAct
 	if (bIsRadialDamage)
 	{
 		Params.bIsRadialDamage=bIsRadialDamage;
-		Params.RadialDamageOrigin=RadialDamageOrigin;
+		Params.RadialDamageOrigin=InRadialDamageOrigin;
 		Params.RadialDamageInnerRadius=RadialDamageInnerRadius;
 		Params.RadialDamageOuterRadius=RadialDamageOuterRadius;
 	}
