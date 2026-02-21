@@ -67,8 +67,16 @@ void AAuraCharacterBase::GetLifetimeReplicatedProps(TArray<class FLifetimeProper
 	DOREPLIFETIME(AAuraCharacterBase,bIsBeingShocked)
 }
 
+ float AAuraCharacterBase::TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent,
+	 class AController* EventInstigator, AActor* DamageCauser)
+ {
+ 	const float DamageTaken= Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
+ 	OnDamageDelegate.Broadcast(DamageTaken);
+ 	return DamageTaken;
+ }
 
-UAnimMontage* AAuraCharacterBase::GetHitReactMontage_Implementation()
+
+ UAnimMontage* AAuraCharacterBase::GetHitReactMontage_Implementation()
 {
 	return HitReactMontage;
 }
@@ -215,7 +223,12 @@ FOnASCRegistered& AAuraCharacterBase::GetOnASCRegisteredDelegate()
 	return OnDeathDelegatee;
 }
 
-void AAuraCharacterBase::OnRep_Stunned()
+ FOnDamageSignature& AAuraCharacterBase::GetOnDamageSignature()
+ {
+ 	return OnDamageDelegate;
+ }
+
+ void AAuraCharacterBase::OnRep_Stunned()
 {
 	
 }

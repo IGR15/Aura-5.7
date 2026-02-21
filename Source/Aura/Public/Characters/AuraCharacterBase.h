@@ -32,7 +32,7 @@ public:
 	
 	virtual void GetLifetimeReplicatedProps(TArray<class FLifetimeProperty>& OutLifetimeProps) const override;
 
-
+	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser) override; 
 
 	UFUNCTION(NetMulticast,Reliable)
 	virtual void MultiCastHandleDeath(const FVector& DeathImpulse);//this is going to handel all the death on the clients
@@ -59,7 +59,10 @@ public:
 	UPROPERTY(BlueprintAssignable)
 	FOnDeathSignature OnDeathDelegatee;
 	virtual FOnDeathSignature& GetOnDeathDelegate() override;
+	
+	virtual FOnDamageSignature& GetOnDamageSignature()override ;
 	/* end combat interface*/
+	FOnDamageSignature OnDamageDelegate;
 
 	UPROPERTY(EditAnywhere,Category="Combat")
 	TArray<FTaggedMontage> AttackMontages;
