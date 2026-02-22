@@ -11,6 +11,7 @@
 #include "NiagaraFunctionLibrary.h"
 #include "AbilitySyste/AuraAbilitySystemComponent.h"
 #include "Actor/MagicCircle.h"
+#include "Aura/Aura.h"
 #include "Components/DecalComponent.h"
 #include "Components/SplineComponent.h"
 #include "Input/AuraInputComponent.h"
@@ -247,8 +248,8 @@ void AAuraPlayerController::CurserTrace()
 		ThisActor = nullptr;
 		return;
 	}
-	
-	GetHitResultUnderCursor(ECC_Visibility,false,CurserHit);
+	const ECollisionChannel TraceChannel=IsValid(MagicCircle)? ECC_ExcludePlayers: ECC_Visibility;
+	GetHitResultUnderCursor(TraceChannel,false,CurserHit);
 	if (!CurserHit.bBlockingHit) return;
 	LastActor=ThisActor;
 	ThisActor=CurserHit.GetActor();
