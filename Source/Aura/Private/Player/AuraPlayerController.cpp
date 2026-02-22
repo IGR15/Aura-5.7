@@ -68,7 +68,7 @@ void AAuraPlayerController::ShowMagicCircle(UMaterialInterface* DecalMaterial)
 		MagicCircle=GetWorld()->SpawnActor<AMagicCircle>(MagicCircleClass);
 		if (DecalMaterial)
 		{
-			MagicCircle->MagicCircleDecal->SetMaterial(0, DecalMaterial);
+			MagicCircle->MagicCircleDecal->SetDecalMaterial(DecalMaterial);
 		}
 	}
 }
@@ -240,7 +240,7 @@ void AAuraPlayerController::Move(const FInputActionValue& InputActionValue)
 }
 void AAuraPlayerController::CurserTrace()
 {
-	if(GetASC()&&GetASC()->HasMatchingGameplayTag(FAuraGameplayTags::Get().Player_Block_CursorTrace))
+	if(GetASC() && GetASC()->HasMatchingGameplayTag(FAuraGameplayTags::Get().Player_Block_CursorTrace))
 	{
 		if (LastActor) LastActor->UnHighLightAcotr();
 		if (ThisActor) ThisActor->UnHighLightAcotr();
@@ -248,12 +248,14 @@ void AAuraPlayerController::CurserTrace()
 		ThisActor = nullptr;
 		return;
 	}
-	const ECollisionChannel TraceChannel=IsValid(MagicCircle)? ECC_ExcludePlayers: ECC_Visibility;
+	const ECollisionChannel TraceChannel=IsValid(MagicCircle) ? ECC_ExcludePlayers : ECC_Visibility;
 	GetHitResultUnderCursor(TraceChannel,false,CurserHit);
 	if (!CurserHit.bBlockingHit) return;
 	LastActor=ThisActor;
 	ThisActor=CurserHit.GetActor();
-	//ThisActor=Cast<IEnemyInterface>(CurserHit.GetActor());
+	/*
+	ThisActor=Cast<IEnemyInterface>(CurserHit.GetActor());
+	*/
 	if (LastActor!=ThisActor)
 	{
 		if (LastActor) LastActor->UnHighLightAcotr();

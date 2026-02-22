@@ -42,6 +42,15 @@ AAuraCharacterBase::AAuraCharacterBase()
 	Weapon = CreateDefaultSubobject<USkeletalMeshComponent>("Weapon");
 	Weapon->SetupAttachment(GetMesh(),FName("WeaponHandSocket"));
 	Weapon->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+ 	
+ 	GetCapsuleComponent()->SetReceivesDecals(false);
+ 	GetMesh()->SetReceivesDecals(false);
+ 	Weapon->SetReceivesDecals(false);
+ 	
+ 	GetMesh()->SetCollisionResponseToChannel(ECC_ExcludePlayers, ECR_Ignore);
+ 	GetCapsuleComponent()->SetCollisionResponseToChannel(ECC_ExcludePlayers, ECR_Ignore);
+ 	Weapon->SetCollisionResponseToChannel(ECC_ExcludePlayers, ECR_Ignore);
+ 	
 	
 	EffectAttachComponent=CreateDefaultSubobject<USceneComponent>("EffectAttachPoint");
 	EffectAttachComponent->SetupAttachment(GetRootComponent());
