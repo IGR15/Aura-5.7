@@ -94,6 +94,8 @@ public:
 
 	FGameplayTag Cooldown_Fire_FireBolt;
 	FGameplayTag Cooldown_Lightning_Electrocute;
+	FGameplayTag Cooldown_Arcane_ArcaneShard;
+	
 	
 	FGameplayTag Abilities_Passive_HaloOfProtection;
 	/*FGameplayTag Abilities_Passive_HaloOfResistance;

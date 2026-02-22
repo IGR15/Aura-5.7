@@ -123,6 +123,7 @@ void FAuraGameplayTags::InitilizeNativeGameplayTags()
 	/*Abilities Cooldown*/
 	GameplayTags.Cooldown_Fire_FireBolt=UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Cooldown.Fire.FireBolt"),FString("FireBolt Cooldown ability Tag"));
 	GameplayTags.Cooldown_Lightning_Electrocute=UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Cooldown.Lightning.Electrocute"),FString("Electrocute Cooldown Ability Tag"));
+	GameplayTags.Cooldown_Arcane_ArcaneShard=UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Cooldown.Arcane.ArcaneShard"),FString("ArcaneShard Cooldown Ability Tag"));
 
 
 	

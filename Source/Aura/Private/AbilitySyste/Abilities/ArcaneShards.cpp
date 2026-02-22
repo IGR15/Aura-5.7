@@ -23,7 +23,7 @@ FString UArcaneShards::GetDescription(int32 Level)
 					// Cooldown
 					"<Small>Cooldown: </><Cooldown>%.1f</>\n\n"
 			
-					"<Default>Summon shards of Arcane Energy, "
+					"<Default>Summon shard of Arcane Energy, "
 					"causing radial Damage of: </>"
 
 					// Damage
@@ -71,7 +71,7 @@ FString UArcaneShards::GetNextLevelDescription(int32 Level)
 	const float Cooldown = GetCoolDown(Level);
 	return FString::Printf(TEXT(
 	// Title
-			"<Title>ARCANE SHARDS</>\n\n"
+			"<Title>Next Level</>\n\n"
 
 			// Level
 			"<Small>Level: </><Level>%d</>\n"
