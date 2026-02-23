@@ -3,6 +3,9 @@
 
 #include "AbilitySyste/Abilities/AuraFireBlast.h"
 
+#include "AbilitySyste/AuraAbilitySystemLibrary.h"
+#include "Actor/AuraFireBall.h"
+
 FString UAuraFireBlast::GetDescription(int32 Level)
 {
 	const float ManaCost=FMath::Abs(GetManaCost(Level));
@@ -72,4 +75,34 @@ FString UAuraFireBlast::GetNextLevelDescription(int32 Level)
 					Cooldown,
 					NumFireBalls,
 					ScaledDamage);
+}
+
+TArray<AAuraFireBall*> UAuraFireBlast::SpawnFireBals()
+{
+	TArray<AAuraFireBall*> FireBalls;
+	const FVector Forward = GetAvatarActorFromActorInfo()->GetActorForwardVector();
+	const FVector Location = GetAvatarActorFromActorInfo()->GetActorLocation();
+	TArray<FRotator>Rotators = UAuraAbilitySystemLibrary::EvenlySpaceDRotators(Forward,FVector::UpVector,360.f,NumFireBalls);
+	
+	for (const FRotator& Rotator : Rotators)
+	{
+		FTransform SpawnTransform;
+		SpawnTransform.SetLocation(Location);
+		SpawnTransform.SetRotation(Rotator.Quaternion());
+		AAuraFireBall* FireBall = GetWorld()->SpawnActorDeferred<AAuraFireBall>(
+			FireBallClass,
+			SpawnTransform,
+			GetOwningActorFromActorInfo(),
+			CurrentActorInfo->PlayerController->GetPawn(),
+			ESpawnActorCollisionHandlingMethod::AlwaysSpawn
+			);
+		FDamageEffectParams DamageEffectParams= MakeDamageEffectParams();
+		FireBall->DamageEffectParams = DamageEffectParams;
+		
+		FireBalls.Add(FireBall);
+		
+		FireBall->FinishSpawning(SpawnTransform);
+	}
+	
+	return FireBalls;
 }
