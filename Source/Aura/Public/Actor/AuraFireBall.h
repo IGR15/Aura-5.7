@@ -15,6 +15,9 @@ public:
 	
 	UFUNCTION(BlueprintImplementableEvent)
 	void StartOutGoingTimeline();
+	
+	UPROPERTY(BlueprintReadOnly)
+	TObjectPtr<AActor>ReturnToActor;
 
 protected:
 	virtual void BeginPlay() override;
