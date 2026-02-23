@@ -181,6 +181,19 @@ public:
 		float SpawnHeight,
 		float Duration
 	);
+	/*
+	 * Damage Effect Params
+	 */
+	UFUNCTION(BlueprintCallable, Category="AuraAbilitySystemLibrary|Damage Effect")
+	static void SetIsRadialDamageEffectParam(UPARAM(ref) FDamageEffectParams& DamageEffectParams, bool bIsRadial,float InnerRadius,float OuterRadius,FVector Origin);
+	
+	UFUNCTION(BlueprintCallable, Category="AuraAbilitySystemLibrary|Damage Effect")
+	static void SetKnockBackDirection(UPARAM(ref) FDamageEffectParams& DamageEffectParams, FVector KnockBackDirection, float Magnitude = 0.f);
+	
+	UFUNCTION(BlueprintCallable, Category="AuraAbilitySystemLibrary|Damage Effect")
+	static void SetDeathImpulseDirection(UPARAM(ref) FDamageEffectParams& DamageEffectParams, FVector ImpulseDirection, float Magnitude = 0.f);
+	
+	
 };
 
 

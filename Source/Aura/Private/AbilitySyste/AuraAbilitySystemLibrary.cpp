@@ -256,6 +256,42 @@ void UAuraAbilitySystemLibrary::SpawnRainOfFire(UObject* WorldContextObject, UNi
 	
 }
 
+void UAuraAbilitySystemLibrary::SetIsRadialDamageEffectParam(FDamageEffectParams& DamageEffectParams, bool bIsRadial,float InnerRadius,float OuterRadius,FVector Origin)
+{
+	DamageEffectParams.bIsRadialDamage=bIsRadial;
+	DamageEffectParams.RadialDamageInnerRadius=InnerRadius;
+	DamageEffectParams.RadialDamageOuterRadius=OuterRadius;
+	DamageEffectParams.RadialDamageOrigin=Origin;
+}
+
+void UAuraAbilitySystemLibrary::SetKnockBackDirection(FDamageEffectParams& DamageEffectParams,
+	 FVector KnockBackDirection, float Magnitude)
+{
+	KnockBackDirection.Normalize();
+	if (Magnitude == 0.f )
+	{	
+		DamageEffectParams.KnockbackForce = KnockBackDirection * DamageEffectParams.KnockbackForceMagnitude;
+	}
+	else
+	{
+		DamageEffectParams.KnockbackForce = KnockBackDirection * Magnitude;
+	}
+}
+
+void UAuraAbilitySystemLibrary::SetDeathImpulseDirection(FDamageEffectParams& DamageEffectParams,
+	 FVector ImpulseDirection, float Magnitude)
+{
+	ImpulseDirection.Normalize();
+	if (Magnitude == 0.f )
+	{
+		DamageEffectParams.DeathImpulse = ImpulseDirection * DamageEffectParams.DeathImpulseMagnitude;
+	}
+	else
+	{
+		DamageEffectParams.DeathImpulse = ImpulseDirection * Magnitude;
+	}
+}
+
 UCharacterClassInfo* UAuraAbilitySystemLibrary::GetCharacterClassInfo(const UObject* WorldContextObject)
 {
 	AAuraGameModeBase* GameMode= Cast<AAuraGameModeBase>(UGameplayStatics::GetGameMode(WorldContextObject));
