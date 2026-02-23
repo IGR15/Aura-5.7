@@ -28,6 +28,8 @@ public:
 	TObjectPtr<USceneComponent> HomingTargetSceneComponent;
 protected:
 	virtual void BeginPlay() override;
+	
+	UFUNCTION(blueprintCallable)
 	void OnHit();
 
 	virtual void Destroyed() override;

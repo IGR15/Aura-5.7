@@ -4,15 +4,10 @@
 #include "Actor/AuraFireBall.h"
 
 
-// Sets default values
-AAuraFireBall::AAuraFireBall()
-{
-	PrimaryActorTick.bCanEverTick = true;
-}
-
 void AAuraFireBall::BeginPlay()
 {
 	Super::BeginPlay();
+	StartOutGoingTimeline();
 }
 
 void AAuraFireBall::OnsphereOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
