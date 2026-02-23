@@ -193,6 +193,11 @@ public:
 	UFUNCTION(BlueprintCallable, Category="AuraAbilitySystemLibrary|Damage Effect")
 	static void SetDeathImpulseDirection(UPARAM(ref) FDamageEffectParams& DamageEffectParams, FVector ImpulseDirection, float Magnitude = 0.f);
 	
+	UFUNCTION(BlueprintCallable, Category="AuraAbilitySystemLibrary|Damage Effect")
+	static void SetTargetEffectParams(UPARAM(ref) FDamageEffectParams& DamageEffectParams, UAbilitySystemComponent* InASC);
+	
+	
+	
 	
 };
 

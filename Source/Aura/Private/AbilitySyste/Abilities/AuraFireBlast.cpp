@@ -80,6 +80,12 @@ FString UAuraFireBlast::GetNextLevelDescription(int32 Level)
 TArray<AAuraFireBall*> UAuraFireBlast::SpawnFireBals()
 {
 	TArray<AAuraFireBall*> FireBalls;
+
+	// Authority Gate
+	if (!GetAvatarActorFromActorInfo()->HasAuthority())
+	{
+		return FireBalls;
+	}
 	const FVector Forward = GetAvatarActorFromActorInfo()->GetActorForwardVector();
 	const FVector Location = GetAvatarActorFromActorInfo()->GetActorLocation();
 	TArray<FRotator>Rotators = UAuraAbilitySystemLibrary::EvenlySpaceDRotators(Forward,FVector::UpVector,360.f,NumFireBalls);

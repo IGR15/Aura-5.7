@@ -292,6 +292,11 @@ void UAuraAbilitySystemLibrary::SetDeathImpulseDirection(FDamageEffectParams& Da
 	}
 }
 
+void UAuraAbilitySystemLibrary::SetTargetEffectParams(FDamageEffectParams& DamageEffectParams, UAbilitySystemComponent* InASC)
+{
+	DamageEffectParams.TargetASC=InASC;
+}
+
 UCharacterClassInfo* UAuraAbilitySystemLibrary::GetCharacterClassInfo(const UObject* WorldContextObject)
 {
 	AAuraGameModeBase* GameMode= Cast<AAuraGameModeBase>(UGameplayStatics::GetGameMode(WorldContextObject));

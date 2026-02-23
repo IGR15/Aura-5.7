@@ -30,9 +30,17 @@ protected:
 	virtual void BeginPlay() override;
 	
 	UFUNCTION(blueprintCallable)
-	void OnHit();
+	virtual void OnHit();
 
 	virtual void Destroyed() override;
+	UPROPERTY(EditAnywhere)
+	TObjectPtr<USoundBase> ImpactSound;
+    
+	UPROPERTY(EditAnywhere)
+	TObjectPtr<USoundBase> LoopingSound;
+    
+	UPROPERTY()
+	TObjectPtr<UAudioComponent> LoopingSoundComponent;
 	
 	bool IsValidOverLap(AActor* OtherActor);
 	bool bHit = false;
@@ -48,14 +56,6 @@ private:
 	
 	UPROPERTY(EditAnywhere)
 	TObjectPtr<UNiagaraSystem>ImpacctEffect;
-
-	UPROPERTY(EditAnywhere)
-	TObjectPtr<USoundBase> ImpactSound;
-
-	UPROPERTY(EditAnywhere)
-	TObjectPtr<USoundBase> LoopingSound;
-
-	UPROPERTY()
-	TObjectPtr<UAudioComponent> LoopingSoundComponent;
+	
 	
 };

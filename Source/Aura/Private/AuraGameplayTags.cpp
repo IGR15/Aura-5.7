@@ -151,4 +151,8 @@ void FAuraGameplayTags::InitilizeNativeGameplayTags()
 
 	GameplayTags.Abilities = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Abilities"), FString("Ability Tag."));
 	GameplayTags.Abilities_Passive = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Abilities.Passive"), FString("Passive Ability Tag."));
+	/*
+	 * game play cue
+	 */
+	GameplayTags.GameplayCue_FireBlast = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("GameplayCue.FireBlast"), FString("Fire Blast Game Play Cue Tag."));
 }

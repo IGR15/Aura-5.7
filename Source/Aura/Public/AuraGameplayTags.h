@@ -131,6 +131,8 @@ public:
 	
 	FGameplayTag Abilities;
 	FGameplayTag Abilities_Passive;
+	
+	FGameplayTag GameplayCue_FireBlast;
 
 private:
 	static FAuraGameplayTags GameplayTags;
