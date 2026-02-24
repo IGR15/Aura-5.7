@@ -8,7 +8,6 @@
 #include "AbilitySystemComponent.h"
 #include "AuraAbilityTypes.h"
 #include "AuraGameplayTags.h"
-#include "Actor/RainOfFireSpawner.h"
 #include "Game/AuraGameModeBase.h"
 #include "UI/WidgetController/AuraWidgetController.h"
 
@@ -232,29 +231,7 @@ FGameplayEffectContextHandle UAuraAbilitySystemLibrary::ApplyDamageEffect(const 
 	return EffectContextHandle;
 }
 
-void UAuraAbilitySystemLibrary::SpawnRainOfFire(UObject* WorldContextObject, UNiagaraSystem* FireballSystem,
-	FVector CenterLocation, float Radius, int32 TotalFireballs, float SpawnHeight, float Duration)
-{
-	if (!WorldContextObject || !FireballSystem) return;
 
-	UWorld* World = WorldContextObject->GetWorld();
-	if (!World) return;
-
-	ARainOfFireSpawner* Spawner =
-		World->SpawnActor<ARainOfFireSpawner>();
-
-	if (!Spawner) return;
-
-	Spawner->SetActorLocation(CenterLocation);
-	Spawner->StartRain(
-		CenterLocation,
-		Radius,
-		TotalFireballs,
-		SpawnHeight,
-		Duration
-	);
-	
-}
 
 void UAuraAbilitySystemLibrary::SetIsRadialDamageEffectParam(FDamageEffectParams& DamageEffectParams, bool bIsRadial,float InnerRadius,float OuterRadius,FVector Origin)
 {

@@ -171,7 +171,7 @@ public:
 	UFUNCTION(BlueprintCallable,Category="AuraAbilitySystemLibrary|Damage Effect")
 	static FGameplayEffectContextHandle ApplyDamageEffect(const FDamageEffectParams& DamageEffectParams);
 	
-	UFUNCTION(BlueprintCallable, Category="Rain Of Fire", meta=(WorldContext="WorldContextObject"))
+	/*UFUNCTION(BlueprintCallable, Category="Rain Of Fire", meta=(WorldContext="WorldContextObject"))
 	static void SpawnRainOfFire(
 		UObject* WorldContextObject,
 		UNiagaraSystem* FireballSystem,
@@ -180,7 +180,7 @@ public:
 		int32 TotalFireballs,
 		float SpawnHeight,
 		float Duration
-	);
+	);*/
 	/*
 	 * Damage Effect Params
 	 */
