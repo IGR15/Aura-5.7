@@ -7,10 +7,15 @@
 #include "LoadScreenWidget.generated.h"
 
 /**
- * 
+ * (
  */
 UCLASS()
 class AURA_API ULoadScreenWidget : public UUserWidget
 {
 	GENERATED_BODY()
+public:
+	
+	UFUNCTION(bluePrintImplementableEvent,BlueprintCallable)
+	void BlueprintInitializeWidget();
+	
 };
