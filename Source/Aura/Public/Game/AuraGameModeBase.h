@@ -6,6 +6,8 @@
 #include "GameFramework/GameModeBase.h"
 #include "GameplayTagContainer.h"
 #include "AuraGameModeBase.generated.h"
+class USaveGame;
+class UMVVM_LoadSlot;
 class UAbilityInfo;
 class UCharacterClassInfo;
 class UGameplayEffect;
@@ -26,5 +28,10 @@ public:
 	
 	UPROPERTY(EditDefaultsOnly, Category = "Debuff Data")
 	TMap<FGameplayTag, TSubclassOf<UGameplayEffect>> DebuffTagToEffectMap;
+	
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<USaveGame>LoadScreenSaveGameClass;
+	
+	void SaveSlotData(UMVVM_LoadSlot* LoadSlot,int32 SlotIndex);
 	
 };
