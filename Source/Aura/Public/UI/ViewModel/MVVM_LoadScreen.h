@@ -35,16 +35,16 @@ public:
 	
 private:
 	
-	UPROPERTY()
-	TMap<int32,UMVVM_LoadSlot*> LoadSlots;
+	UPROPERTY(Transient)
+	TMap<int32,TObjectPtr<UMVVM_LoadSlot>> LoadSlots;
 	
-	UPROPERTY()
+	UPROPERTY(Transient)
 	TObjectPtr<UMVVM_LoadSlot> LoadSlot_0;
 	
-	UPROPERTY()
+	UPROPERTY(Transient)
 	TObjectPtr<UMVVM_LoadSlot> LoadSlot_1;
 	
-	UPROPERTY()
+	UPROPERTY(Transient)
 	TObjectPtr<UMVVM_LoadSlot> LoadSlot_2;
 	
 	
