@@ -26,9 +26,9 @@ void AAuraGameModeBase::SaveSlotData(UMVVM_LoadSlot* LoadSlot, int32 SlotIndex)
 ULoadScreenSaveGame* AAuraGameModeBase::GetSaveSlotData(const FString& SlotName, int32 SlotIndex) const
 {
 	USaveGame* SaveGameObject = nullptr;
-	if (UGameplayStatics::DoesSaveGameExist(SlotName,SlotIndex))
+	if (UGameplayStatics::DoesSaveGameExist(SlotName, SlotIndex))
 	{
-		SaveGameObject = UGameplayStatics::LoadGameFromSlot(SlotName,SlotIndex);
+		SaveGameObject = UGameplayStatics::LoadGameFromSlot(SlotName, SlotIndex);
 	}
 	else
 	{

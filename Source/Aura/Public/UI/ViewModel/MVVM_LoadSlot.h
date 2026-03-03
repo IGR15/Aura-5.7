@@ -20,6 +20,7 @@ public:
 	UPROPERTY(BlueprintAssignable)
 	FSetWidgetSwitcherIndex SetWidgetSwitcherIndexDelegate;
 	
+	UPROPERTY()
 	TEnumAsByte<ESaveSlotStatus> SlotStatus;
 	
 	UPROPERTY()

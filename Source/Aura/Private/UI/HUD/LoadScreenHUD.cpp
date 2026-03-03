@@ -19,4 +19,6 @@ void ALoadScreenHUD::BeginPlay()
 	
 	LoadScreenWidget->BlueprintInitializeWidget();
 	
+	LoadScreenViewModel->LoadData();
+	
 }
