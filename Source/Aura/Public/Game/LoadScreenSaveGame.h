@@ -9,6 +9,13 @@
 /**
  * 
  */
+UENUM(BlueprintType)
+enum ESaveSlotStatus
+{
+	Vacant,
+	EnterName,
+	Taken
+};
 UCLASS()
 class AURA_API ULoadScreenSaveGame : public USaveGame
 {
@@ -23,4 +30,8 @@ public:
 	int32 SlotIndex = 0;
 	
 	FString PlayerName = FString("Default Name");
+	
+	UPROPERTY()
+	TEnumAsByte<ESaveSlotStatus> SlotStatus = ESaveSlotStatus::Vacant;
+	
 };
