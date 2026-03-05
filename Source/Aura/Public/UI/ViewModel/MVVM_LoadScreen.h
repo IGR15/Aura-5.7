@@ -38,9 +38,15 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void SelectSlotButtonPressed(int32 Slot);
 	
+	UFUNCTION(BlueprintCallable)
+	void DeleteButtonPressed();
+	
 	void LoadData();
 	
 private:
+	
+	UPROPERTY()
+	TObjectPtr<UMVVM_LoadSlot> SelectedLoadSlot;
 	
 	UPROPERTY(Transient)
 	TMap<int32,TObjectPtr<UMVVM_LoadSlot>> LoadSlots;
