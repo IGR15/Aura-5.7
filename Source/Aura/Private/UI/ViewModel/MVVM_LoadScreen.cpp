@@ -45,15 +45,7 @@ void UMVVM_LoadScreen::NewSlotButtonPressed(int32 Slot, const FString& EnteredNa
 	AAuraGameModeBase* AuraGameModeBase = Cast<AAuraGameModeBase>(UGameplayStatics::GetGameMode(GetWorld()));
 	UMVVM_LoadSlot* SlotVM = LoadSlots.FindRef(Slot);
 
-	if (!IsValid(SlotVM))
-	{
-		UE_LOG(LogTemp, Error, TEXT("SlotVM INVALID. Slot=%d Ptr=%p"), Slot, SlotVM);
-		return;
-	}
-
-	UE_LOG(LogTemp, Warning, TEXT("SlotVM OK. Slot=%d Ptr=%p Name=%s"),
-		   Slot, SlotVM, *SlotVM->GetLoadSlotName());
-
+	SlotVM->SetMapName(AuraGameModeBase->DefaultMapName);
 	SlotVM->SetPlayerName(EnteredName);
 	SlotVM->SlotStatus = Taken;
 	AuraGameModeBase->SaveSlotData(SlotVM, Slot);
@@ -106,5 +98,6 @@ void UMVVM_LoadScreen::LoadData()
 		LoadSlot.Value->SlotStatus = SaveSlotStatus;
 		LoadSlot.Value->SetPlayerName(PlayerName);
 		LoadSlot.Value->InitializeSlot();
+		LoadSlot.Value->SetMapName(SaveObject->MapName);
 	}
 }
