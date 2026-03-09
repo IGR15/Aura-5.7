@@ -10,17 +10,19 @@
 ACheckpoint::ACheckpoint(const FObjectInitializer& ObjectInitializer)
 : Super(ObjectInitializer)
 {
-	SphereComp = CreateDefaultSubobject<USphereComponent>("SphereComp");
-	
-	SphereComp->SetupAttachment(GetRootComponent());
-	SphereComp->SetCollisionEnabled(ECollisionEnabled::Type::QueryOnly);
-	SphereComp->SetCollisionResponseToAllChannels(ECR_Ignore);
-	SphereComp->SetCollisionResponseToChannel(ECC_Pawn,ECR_Overlap);
 	
 	CheckpointMeshComp = CreateDefaultSubobject<UStaticMeshComponent>("CheckpointMeshComp");
 	CheckpointMeshComp->SetupAttachment(GetRootComponent());
 	CheckpointMeshComp->SetCollisionEnabled(ECollisionEnabled::Type::QueryAndPhysics);
 	CheckpointMeshComp->SetCollisionResponseToAllChannels(ECR_Block);
+	
+	SphereComp = CreateDefaultSubobject<USphereComponent>("SphereComp");
+	SphereComp->SetupAttachment(CheckpointMeshComp);
+	SphereComp->SetCollisionEnabled(ECollisionEnabled::Type::QueryOnly);
+	SphereComp->SetCollisionResponseToAllChannels(ECR_Ignore);
+	SphereComp->SetCollisionResponseToChannel(ECC_Pawn,ECR_Overlap);
+	
+
 }
 
 void ACheckpoint::BeginPlay()
