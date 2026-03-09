@@ -55,7 +55,7 @@ public:
 	
 	virtual void SetIsBeingShocked_Implementation(bool BInShock) override;
 	virtual bool IsBeingShocked_Implementation() const override;
-
+	
 	UPROPERTY(BlueprintAssignable)
 	FOnDeathSignature OnDeathDelegatee;
 	virtual FOnDeathSignature& GetOnDeathDelegate() override;

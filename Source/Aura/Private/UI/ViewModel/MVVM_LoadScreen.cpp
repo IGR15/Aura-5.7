@@ -108,6 +108,8 @@ void UMVVM_LoadScreen::PlayButtonPressed()
 	GameInstance->PlayerStartTag = SelectedLoadSlot->PlayerStartTag;
 	*/
 	GameInstance->PlayerStartTag = SelectedLoadSlot.Get()->PlayerStartTag;
+	GameInstance->LoadSlotName = SelectedLoadSlot->GetLoadSlotName();
+	GameInstance->LoadSlotIndex = SelectedLoadSlot->SlotIndex;
 	
 	if (IsValid(SelectedLoadSlot))
 	{

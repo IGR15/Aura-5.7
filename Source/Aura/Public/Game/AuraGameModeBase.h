@@ -41,6 +41,9 @@ public:
 	
 	ULoadScreenSaveGame* GetSaveSlotData(const FString& SlotName,int32 SlotIndex) const;
 	
+	ULoadScreenSaveGame* RetrieveInGameSaveData();
+	void SaveIngameProgressData(ULoadScreenSaveGame* SaveObject);
+	
 	UPROPERTY(EditDefaultsOnly)
 	FString DefaultMapName;
 	
