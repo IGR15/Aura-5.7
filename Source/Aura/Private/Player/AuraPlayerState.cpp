@@ -90,10 +90,10 @@ void AAuraPlayerState::SetSpellPoints(int32 InSpellPoints)
 	OnSpellPointsChangeDelegate.Broadcast(SpellPoints);
 }
 
-void AAuraPlayerState::OnRep_Level(int32 OldLevel)
+void AAuraPlayerState::OnRep_Level(int32 OldLevel) 
 {
 	//GAMEPLAYATTRIBUTE_REPNOTIFY(int32,level);
-	OnLevelChangedDelegate.Broadcast(Level,false);
+	OnLevelChangedDelegate.Broadcast(Level,true);
 }
 
 void AAuraPlayerState::OnRep_XP(int32 OldXP)
