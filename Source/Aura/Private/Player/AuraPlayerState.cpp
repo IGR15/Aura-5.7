@@ -49,7 +49,7 @@ void AAuraPlayerState::AddToLevel(int32 InLevel)
 	Level += InLevel;
 	OnModifierDependencyChanged.Broadcast();
 	Cast<UAuraAttributeSet>(AttributeSet)->MaximizeVitalAttributes();
-	OnLevelChangedDelegate.Broadcast(Level);
+	OnLevelChangedDelegate.Broadcast(Level,true);
 }
 
 void AAuraPlayerState::AddToAttributePoints(int32 InAttributePoints)
@@ -73,8 +73,10 @@ void AAuraPlayerState::SetXP(int32 InXP)
 void AAuraPlayerState::SetLevel(int32 InLevel)
 {
 	Level = InLevel;
-	OnLevelChangedDelegate.Broadcast(Level);
+	OnLevelChangedDelegate.Broadcast(Level,false);
 }
+
+
 
 void AAuraPlayerState::SetAttributePoints(int32 InAttributePoints)
 {
@@ -91,7 +93,7 @@ void AAuraPlayerState::SetSpellPoints(int32 InSpellPoints)
 void AAuraPlayerState::OnRep_Level(int32 OldLevel)
 {
 	//GAMEPLAYATTRIBUTE_REPNOTIFY(int32,level);
-	OnLevelChangedDelegate.Broadcast(Level);
+	OnLevelChangedDelegate.Broadcast(Level,false);
 }
 
 void AAuraPlayerState::OnRep_XP(int32 OldXP)

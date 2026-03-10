@@ -28,9 +28,9 @@ void UOverlayWidgetController::BindCallbacks()
 	// Cast base attribute set to the specific AuraAttributeSet subclass
 
 	AuraPlayerState->OnLevelChangedDelegate.AddLambda(
-		[this](int32 NewLevel)
+		[this](int32 NewLevel, bool bLevelUp)
 		{
-			OnPlayerLevelChangeDelegate.Broadcast(NewLevel);
+			OnPlayerLevelChangeDelegate.Broadcast(NewLevel, bLevelUp);
 		}
 		);
 

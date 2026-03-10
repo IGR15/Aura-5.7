@@ -9,6 +9,7 @@
 #include "AuraAbilitySystemLibrary.generated.h"
 
 
+class ULoadScreenSaveGame;
 struct FGameplayTag;
 struct FDamageEffectParams;
 class UAbilityInfo;
@@ -50,7 +51,10 @@ public:
 	//this will initialize base attributes based on attribute class and lvl
 	UFUNCTION(BlueprintCallable,Category="AuraAbilitySystemLibrary|Character Class Defaultes")
 	static void InitializeDefaultAttributes(const UObject* WorldContextObject,ECharacterClass CharacterClass,float level,UAbilitySystemComponent* ASC);
-
+	
+	UFUNCTION(BlueprintCallable,Category="AuraAbilitySystemLibrary|Character Class Defaultes")
+	static void InitializeDefaultAttributesFromSaveData(const UObject* WorldContextObject,UAbilitySystemComponent* ASC,ULoadScreenSaveGame* SaveGame);
+	
 	UFUNCTION(BlueprintCallable,Category="AuraAbilitySystemLibrary|Character Class Defaultes")
 	static void GiveStartupAbilites(const UObject* WorldContextObject,UAbilitySystemComponent* ASC,ECharacterClass CharacterClass);
 
