@@ -117,7 +117,8 @@ public:
 	FGameplayTag Montage_Attack_3;
 	FGameplayTag Montage_Attack_4;
 
-	 
+	FGameplayTag Abilities_Passive_ListenForEvent;
+
 
 	FGameplayTag Player_Block_InputPressed;
 	FGameplayTag Player_Block_InputHeld;
