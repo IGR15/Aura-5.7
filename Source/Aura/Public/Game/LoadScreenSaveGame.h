@@ -43,6 +43,10 @@ struct FSavedAbility
 	float AbilityLevel = 1.f;
 	
 };
+inline bool operator==(const FSavedAbility& Left, const FSavedAbility& Right)
+{
+	return Left.AbilityTag == Right.AbilityTag;
+}
 UCLASS()
 class AURA_API ULoadScreenSaveGame : public USaveGame
 {

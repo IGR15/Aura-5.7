@@ -4,6 +4,7 @@
 #include "AbilitySyste/Passive/PassiveNiagaraComponent.h"
 
 #include "AbilitySystemBlueprintLibrary.h"
+#include "AuraGameplayTags.h"
 #include "AbilitySyste/AuraAbilitySystemComponent.h"
 #include "Interaction/CombatInterface.h"
 
@@ -25,6 +26,7 @@ void UPassiveNiagaraComponent::BeginPlay()
 	if (AuraASC && !AuraASC->ActivatePassiveEffectDelegate.IsBoundToObject(this))
 	{
 		AuraASC->ActivatePassiveEffectDelegate.AddUObject(this,&UPassiveNiagaraComponent::OnPassiveActivate);
+		ActivateIfEquipped(AuraASC);
 	}
 	else if (ICombatInterface* CombatInterface=Cast<ICombatInterface>(GetOwner()))
 	{
@@ -34,6 +36,7 @@ void UPassiveNiagaraComponent::BeginPlay()
 			if (AuraASC && !AuraASC->ActivatePassiveEffectDelegate.IsBoundToObject(this))
 			{
 				AuraASC->ActivatePassiveEffectDelegate.AddUObject(this,&UPassiveNiagaraComponent::OnPassiveActivate);
+				ActivateIfEquipped(AuraASC);
 			}
 		});
 	}
@@ -52,6 +55,18 @@ void UPassiveNiagaraComponent::OnPassiveActivate(const FGameplayTag& AbilityTag,
 		else
 		{
 			Deactivate();
+		}
+	}
+}
+
+void UPassiveNiagaraComponent::ActivateIfEquipped(UAuraAbilitySystemComponent* AuraASC)
+{
+	const bool bStartupAbilitiesActivated = AuraASC->bStartupAbilitiesGiven;
+	if (bStartupAbilitiesActivated)
+	{
+		if (AuraASC->GetStatusFromAbilityTag(PassiveSpellTag) == FAuraGameplayTags::Get().Abilities_Status_Equipped)
+		{
+			Activate();
 		}
 	}
 }
