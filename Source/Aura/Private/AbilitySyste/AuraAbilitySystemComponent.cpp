@@ -5,6 +5,7 @@
 
 #include "AbilitySystemBlueprintLibrary.h"
 #include "AuraGameplayTags.h"
+#include "Abilities/Tasks/AbilityTask_NetworkSyncPoint.h"
 #include "AbilitySyste/AuraAbilitySystemLibrary.h"
 #include "AbilitySyste/Abilities/AuraGameplayAbility.h"
 #include "AbilitySyste/Data/AbilityInfo.h"
@@ -31,7 +32,15 @@ void UAuraAbilitySystemComponent::AddCharacterAbilitiesFromSaveData(ULoadScreenS
 			GiveAbility(LoadedAbilitySpec);
 		}else if (Data.AbilityType == FAuraGameplayTags::Get().Abilities_Type_Passive)
 		{
-			GiveAbilityAndActivateOnce(LoadedAbilitySpec);	
+			if (Data.AbilityStatus.MatchesTagExact(FAuraGameplayTags::Get().Abilities_Status_Equipped))
+			{
+				GiveAbilityAndActivateOnce(LoadedAbilitySpec);	
+			}
+			else
+			{
+				GiveAbility(LoadedAbilitySpec);
+			}
+			
 		}
 	}
 	bStartupAbilitiesGiven = true;
@@ -62,10 +71,9 @@ void UAuraAbilitySystemComponent::AddCharacterPassiveAbilities(
 {
 	for (const TSubclassOf<UGameplayAbility> AbilityClass : StartUpPassiveAbilities)
 	{
-		
 		FGameplayAbilitySpec AbilitySpec= FGameplayAbilitySpec(AbilityClass,1.f);
 		GiveAbilityAndActivateOnce(AbilitySpec);
-		
+		AbilitySpec.GetDynamicSpecSourceTags().AddTag(FAuraGameplayTags::Get().Abilities_Status_Equipped);
 	}
 }
 
