@@ -248,7 +248,6 @@ void AAuraCharacter::SaveProgress_Implementation(const FName& CheckpointTag)
 		if (!HasAuthority())return;
 		UAuraAbilitySystemComponent* AuraASC = Cast<UAuraAbilitySystemComponent>(AbilitySystemComponent);
 		FForEachAbility SaveAbilityDelegate;
-		SaveData->SavedAbilities.Empty();
 		SaveAbilityDelegate.BindLambda([this, AuraASC, SaveData](const FGameplayAbilitySpec& AbilitySpec)
 		{
 			const FGameplayTag AbilityTag = AuraASC->GetAbilityTagFromSpec(AbilitySpec);
@@ -263,10 +262,13 @@ void AAuraCharacter::SaveProgress_Implementation(const FName& CheckpointTag)
 			SavedAbility.AbilityTag = AbilityTag;
 			SavedAbility.AbilityType = Info.AbilityType;
 
-			SaveData->SavedAbilities.AddUnique(SavedAbility);
+			SaveData->SavedAbilities.Add(SavedAbility);
 		});
+		SaveData->SavedAbilities.Empty();
 		AuraASC->ForEachAbility(SaveAbilityDelegate);
 		AuraGameMode->SaveIngameProgressData(SaveData);
+		
+		
 	}
 	
 }

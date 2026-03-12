@@ -27,7 +27,7 @@ protected:
 	void OnPassiveActivate(const FGameplayTag& AbilityTag,bool bActivate);
 	
 	void ActivateIfEquipped(UAuraAbilitySystemComponent* AuraASC);
-
+	
 };
 
 
