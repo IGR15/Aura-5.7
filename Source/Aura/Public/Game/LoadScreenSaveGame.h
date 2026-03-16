@@ -47,6 +47,41 @@ inline bool operator==(const FSavedAbility& Left, const FSavedAbility& Right)
 {
 	return Left.AbilityTag == Right.AbilityTag;
 }
+
+USTRUCT()
+struct FSavedActor 
+{
+	GENERATED_BODY()
+	
+	UPROPERTY()
+	FName ActorName = FName();
+	
+	UPROPERTY()
+	FTransform ActorTransform = FTransform();
+	
+	//Serialized variables from the Actor - ONly those marked with SaveGame Specifier
+	UPROPERTY()
+	TArray<uint8> Bytes;
+	
+	
+};
+inline bool operator==(const FSavedActor& Left, const FSavedActor& Right)
+{
+	return Left.ActorName == Right.ActorName;
+}
+
+USTRUCT()
+struct FSavedMap
+{
+	GENERATED_BODY()
+	
+	UPROPERTY()
+	FString MapAssetName = FString();
+	
+	UPROPERTY()
+	TArray<FSavedActor> SavedActors;
+	
+};
 UCLASS()
 class AURA_API ULoadScreenSaveGame : public USaveGame
 {
@@ -108,5 +143,12 @@ public:
 	
 	UPROPERTY()
 	TArray<FSavedAbility> SavedAbilities;
+	
+	UPROPERTY()
+	TArray<FSavedMap>SavedMaps;
+	
+	FSavedMap GetSavedMapWithMapName(const FString& InMapName);
+	
+	bool HasMap(const FString& InMapName);
 	
 };
