@@ -44,6 +44,9 @@ public:
 	ULoadScreenSaveGame* RetrieveInGameSaveData();
 	void SaveIngameProgressData(ULoadScreenSaveGame* SaveObject);
 	
+	void SaveWorldState(UWorld* World) const;
+	void LoadWorldState(UWorld* World) const;
+	
 	UPROPERTY(EditDefaultsOnly)
 	FString DefaultMapName;
 	
